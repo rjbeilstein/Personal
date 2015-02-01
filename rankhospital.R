@@ -15,17 +15,16 @@
 #
 # 
 ## Read outcome data
-## Check that state and outcome are valid
-## Return hospital name in that state with the given rank
-## 30-day death rate
+## Check that outcome is valid
+## Return hospital name in each state with the given rank
+## 
 #
 # Author: rjb
 ###############################################################################
 
-rankhospital <- function(state, outcome, num = "best") {
-    if (is.null(state)) stop("invalid state")
+rankall <- function(outcome, num = "best") {
     source("getHospitalData.R",local=TRUE)                            # get data function
-    hd<-tryCatch(getHospitalData(outcome,state),error=function(e) e)  # get the data, trap errors
+    hd<-tryCatch(getHospitalData(outcome),error=function(e) e)  # get the data, trap errors
     if (inherits(hd,"error")) stop(conditionMessage(hd))    # If getHospitalData signals an error, pass it along
     
     if (num=="best") rnum=1                                 # "best" is first row
@@ -34,7 +33,7 @@ rankhospital <- function(state, outcome, num = "best") {
         rnum=tryCatch(as.numeric(num),warning=function(e) e)    # decode number
         if (inherits(rnum,"warning")) stop("invalid number")    # complain if number is wrong
     }
-    if (rnum < 1 || rnum > nrow(hd)) return(NA)
-    hd$Hospital.Name[rnum]
+    
+    
 }
 
