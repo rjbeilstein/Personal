@@ -19,8 +19,8 @@
 ###############################################################################
 
 best<-function(state,outcome) {
-    if (is.null(state)) stop("invalid state")          # getHospitalData allows NULL, we don't
-    source("getHospitalData.R",local=TRUE)          # source data fetcher as local function
+    if (is.null(state)) stop("invalid state")               # getHospitalData allows NULL, we don't
+    source("getHospitalData.R",local=TRUE)                  # source data fetcher as local function
     hd<-tryCatch(getHospitalData(outcome,state),error=function(e) e)
    if (inherits(hd,"error")) stop(conditionMessage(hd))    # If getHospitalData signals an error, pass it along
    hd[1,2]
